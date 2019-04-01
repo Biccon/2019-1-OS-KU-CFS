@@ -102,10 +102,6 @@ void change_node(Node *prev, Node *next)
     next->next_node = temp_next;
 }
 
-void edit_exec(Node* node, float exec_time) {
-    
-}
-
 void sort_by_exec(LinkedList *list)
 {
     Node *temp = list->head->next_node;
