@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/time.h>
+#include <sys/wait.h>
 
 #define ITIMER_REAL 0
 #define ITIMER_VIRTUAL 1
