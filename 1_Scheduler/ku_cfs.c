@@ -6,7 +6,7 @@ int time_slice = 0;
 void scheduler_handler(int signum)
 {
     double calc_nice[] = {0.64, 0.8, 1.0, 1.25, 1.5625};
-
+ 
     Node *current_process = get_first(list);
     int nice_level = current_process->nice_level;
     current_process->exec_time += 1 * calc_nice[nice_level + 2];

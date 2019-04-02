@@ -100,7 +100,7 @@ void sort_by_exec(LinkedList *list)
         Node *temp2 = temp->next_node; // list->head->next_node;
         while (temp2 != (list->tail))
         {
-            double time1 = temp -> exec_time;
+            double time1 = temp -> exec_time; 
             double time2 = temp2 -> exec_time;
             pid_t pid1 = temp -> pid;
             pid_t pid2 = temp2 -> pid;
