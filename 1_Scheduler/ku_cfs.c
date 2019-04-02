@@ -1,4 +1,4 @@
-#include "linkedlist.h"
+#include "ku_cfs.h"
 
 LinkedList *list;
 int time_slice = 0;
@@ -11,26 +11,21 @@ void scheduler_handler(int signum)
     int nice_level = current_process->nice_level;
     current_process->exec_time += 1 * calc_nice[nice_level + 2];
     kill(current_process->pid, SIGSTOP);
+    sort_by_exec(list);
 
     if (--time_slice == 0)
     {
+        print_list(list);
         free_list(list);
         exit(1);
     }
 
-    sort_by_exec(list);
     Node *next_process = get_first(list);
     kill(next_process->pid, SIGCONT);
 }
 
 int main(int argc, char **argv)
 {
-    if (argc != 7)
-    {
-        printf("argc not 7\n");
-        exit(1);
-    }
-
     int nice_level[5];
     int total_count = 0;
     for (int k = 0; k < 5; k++)
@@ -45,7 +40,6 @@ int main(int argc, char **argv)
     init_list(list);
     for (int i = 0; i < total_count; i++)
     {
-        int nice = get_nice(nice_level, i);
         char args[2];
         args[0] = 'A' + i;
         args[1] = '\0';
@@ -55,18 +49,18 @@ int main(int argc, char **argv)
         {
             while (1)
             {
-                int status, t;
-                t = waitpid(child, &status, WUNTRACED | WNOHANG);
+                int status;
+                waitpid(child, &status, WUNTRACED | WNOHANG);
                 if (WIFSTOPPED(status))
                 {
+                    insert_last(list, child, get_nice(nice_level, i), 0, args[0]);
                     break;
                 }
             }
-            insert_last(list, child, nice, 0, args[0]); // pid, nice, exec=0으로 node 추가(nice 낮은 것 부터)
         }
         else if (child == 0)
         {
-            execl("./ku_app", "./ku_app", args, NULL); // child가 ku_app으로 대체되어 실행됨. pid:child
+            execl("./ku_app", "./ku_app", args, NULL);
         }
     }
 
@@ -84,6 +78,5 @@ int main(int argc, char **argv)
 
     kill(get_first(list)->pid, SIGCONT);
     setitimer(ITIMER_REAL, &scheduler, NULL);
-    while (1)
-        ;
+    while (1);
 }

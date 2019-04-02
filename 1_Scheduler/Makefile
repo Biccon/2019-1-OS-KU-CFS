@@ -5,4 +5,4 @@ clean :
 		rm *.o ku_cfs
 
 run :
-		./ku_cfs 2 0 1 1 0 10
+		./ku_cfs 3 1 2 4 5 120 >& test.txt
