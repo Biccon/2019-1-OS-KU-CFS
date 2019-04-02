@@ -78,13 +78,10 @@ int main(int argc, char **argv)
         nice_level[k] = atoi(argv[k + 1]);
         total_count += nice_level[k];
     }
-
     time_slice = atoi(argv[6]);
-
+    
     list = (LinkedList *)malloc(sizeof(LinkedList));
     init_list(list);
-    
     make_children(total_count, nice_level);
-
     set_timer();
 }
