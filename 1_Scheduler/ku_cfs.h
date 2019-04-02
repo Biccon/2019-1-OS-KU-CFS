@@ -16,7 +16,7 @@ struct _Node
     char temp;
     pid_t pid;
     int nice_level;
-    double exec_time;
+    double vrumtime;
 };
 struct _LinkedList
 {
@@ -40,7 +40,7 @@ Node *get_first(LinkedList *list)
     return list->head->next_node;
 }
 
-Node *insert_next(Node *node, pid_t pid, int nice_level, double exec_time, char temp)
+Node *insert_next(Node *node, pid_t pid, int nice_level, double vrumtime, char temp)
 {
     Node *new_node = (Node *)malloc(sizeof(Node));
 
@@ -48,7 +48,7 @@ Node *insert_next(Node *node, pid_t pid, int nice_level, double exec_time, char 
     new_node->next_node = node->next_node;
     new_node->pid = pid;
     new_node->nice_level = nice_level;
-    new_node->exec_time = exec_time;
+    new_node->vrumtime = vrumtime;
     new_node->temp = temp;
     if ((node->next_node) != NULL)
         node->next_node->prev_node = new_node;
@@ -57,9 +57,9 @@ Node *insert_next(Node *node, pid_t pid, int nice_level, double exec_time, char 
     return new_node;
 }
 
-Node *insert_last(LinkedList *list, pid_t pid, int nice_level, double exec_time, char temp)
+Node *insert_last(LinkedList *list, pid_t pid, int nice_level, double vrumtime, char temp)
 {
-    return insert_next(list->tail->prev_node, pid, nice_level, exec_time, temp);
+    return insert_next(list->tail->prev_node, pid, nice_level, vrumtime, temp);
 }
 
 void print_list(LinkedList *list)
@@ -67,7 +67,7 @@ void print_list(LinkedList *list)
     Node *temp = list->head->next_node;
     while (temp != (list->tail))
     {
-        printf("char: %c, pid : %d, nice_level : %d, exec_time : %f\n", temp->temp, temp->pid, temp->nice_level, temp->exec_time);
+        printf("char: %c, pid : %d, nice_level : %d, vrumtime : %f\n", temp->temp, temp->pid, temp->nice_level, temp->vrumtime);
         temp = temp->next_node;
     }
     printf("\n");
@@ -83,9 +83,9 @@ void change_node(Node *prev, Node *next)
     prev->nice_level = next->nice_level;
     next->nice_level = temp_nice;
 
-    double temp_exec_time = prev->exec_time;
-    prev->exec_time = next->exec_time;
-    next->exec_time = temp_exec_time;
+    double temp_vrumtime = prev->vrumtime;
+    prev->vrumtime = next->vrumtime;
+    next->vrumtime = temp_vrumtime;
 
     char temp_temp = prev->temp;
     prev->temp=next->temp;
@@ -100,8 +100,8 @@ void sort_by_exec(LinkedList *list)
         Node *temp2 = temp->next_node; // list->head->next_node;
         while (temp2 != (list->tail))
         {
-            double time1 = temp -> exec_time; 
-            double time2 = temp2 -> exec_time;
+            double time1 = temp -> vrumtime; 
+            double time2 = temp2 -> vrumtime;
             pid_t pid1 = temp -> pid;
             pid_t pid2 = temp2 -> pid;
             if (time1 > time2 || ((time1 == time2) && (pid1 > pid2)))
