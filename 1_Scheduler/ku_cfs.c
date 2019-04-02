@@ -15,7 +15,7 @@ void scheduler_handler(int signum)
 
     if (--time_slice == 0)
     {
-        print_list(list);
+        //print_list(list);
         free_list(list);
         exit(1);
     }
@@ -79,7 +79,7 @@ int main(int argc, char **argv)
         total_count += nice_level[k];
     }
     time_slice = atoi(argv[6]);
-    
+
     list = (LinkedList *)malloc(sizeof(LinkedList));
     init_list(list);
     make_children(total_count, nice_level);
