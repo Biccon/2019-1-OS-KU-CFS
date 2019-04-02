@@ -16,22 +16,17 @@ void scheduler_handler(int signum)
     float calc_nice[] = {0.64, 0.8, 1, 1.25, 1.5625}; // -2 -1 0 1 2
 
     Node* current_process = get_first(list);//list->head->next_node;
-    printf("cur pid %d, %c\n", current_process -> pid, current_process -> temp);
+    //printf("cur pid %d, %c\n", current_process -> pid, current_process -> temp);
     int nice_level = current_process -> nice_level;
     current_process -> exec_time += 1 * calc_nice[nice_level + 2]; // sec * calc[nice_value + 2]
     kill(current_process -> pid, SIGSTOP);
-    while(1){
-        int status, t;
-        t = waitpid(current_process -> pid, &status, WUNTRACED | WNOHANG);
-        if(WIFSTOPPED(status)) break;
-    }
     
     if(--time_slice == 0) exit(1);
 
     sort_by_exec(list);
     Node* next_process = get_first(list);
-    printf("nxt pid %d, %c\n", next_process -> pid, next_process -> temp);
-    print_list(list);
+    //printf("nxt pid %d, %c\n", next_process -> pid, next_process -> temp);
+    //print_list(list);
     kill(next_process -> pid, SIGCONT);
 }
 
