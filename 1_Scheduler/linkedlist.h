@@ -40,11 +40,6 @@ Node *get_first(LinkedList *list)
     return list->head->next_node;
 }
 
-Node *get_last(LinkedList *list)
-{
-    return list->tail->prev_node;
-}
-
 Node *insert_next(Node *node, pid_t pid, int nice_level, float exec_time, char temp)
 {
     Node *new_node = (Node *)malloc(sizeof(Node));
@@ -62,11 +57,6 @@ Node *insert_next(Node *node, pid_t pid, int nice_level, float exec_time, char t
     return new_node;
 }
 
-Node *insert_first(LinkedList *list, pid_t pid, int nice_level, float exec_time, char temp)
-{
-    return insert_next(list->head, pid, nice_level, exec_time, temp);
-}
-
 Node *insert_last(LinkedList *list, pid_t pid, int nice_level, float exec_time, char temp)
 {
     return insert_next(list->tail->prev_node, pid, nice_level, exec_time, temp);
@@ -81,18 +71,6 @@ void print_list(LinkedList *list)
         temp = temp->next_node;
     }
     printf("\n");
-}
-
-int get_size(LinkedList *list)
-{
-    int size = 0;
-    Node *temp = list->head->next_node;
-    while (temp != (list->tail))
-    {
-        size++;
-        temp = temp->next_node;
-    }
-    return size;
 }
 
 void change_node(Node *prev, Node *next)
@@ -150,3 +128,15 @@ void free_list(LinkedList *list)
     free(list);
 }
 
+
+int get_nice(int *nice_levels, int index)
+{
+    int temp = 0;
+    for (int i = 0; i < 5; i++)
+    {
+        temp += nice_levels[i];
+        if (temp >= index + 1)
+            return i - 2;
+    }
+    return -2;
+}
