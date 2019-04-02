@@ -5,7 +5,7 @@ int time_slice = 0;
 
 void scheduler_handler(int signum)
 {
-    float calc_nice[] = {0.64, 0.8, 1, 1.25, 1.5625};
+    double calc_nice[] = {0.64, 0.8, 1.0, 1.25, 1.5625};
 
     Node *current_process = get_first(list);
     int nice_level = current_process->nice_level;
@@ -24,20 +24,25 @@ void scheduler_handler(int signum)
     kill(next_process->pid, SIGCONT);
 }
 
-int main(int argc, char **argv)
-{
-    int nice_level[5];
-    int total_count = 0;
-    for (int k = 0; k < 5; k++)
-    {
-        nice_level[k] = atoi(argv[k + 1]);
-        total_count += nice_level[k];
-    }
+void set_timer(){
+    struct sigaction signal_action;
+    struct itimerval scheduler;
 
-    time_slice = atoi(argv[6]);
+    memset(&signal_action, 0, sizeof(signal_action));
+    signal_action.sa_handler = &scheduler_handler;
+    sigaction(SIGALRM, &signal_action, NULL);
 
-    list = (LinkedList *)malloc(sizeof(LinkedList));
-    init_list(list);
+    scheduler.it_interval.tv_sec = 1;
+    scheduler.it_interval.tv_usec = 0;
+    scheduler.it_value.tv_sec = 1;
+    scheduler.it_value.tv_usec = 0;
+
+    kill(get_first(list)->pid, SIGCONT);
+    setitimer(ITIMER_REAL, &scheduler, NULL);
+    while (1);
+}
+
+void make_children(int total_count, int* nice_level){
     for (int i = 0; i < total_count; i++)
     {
         char args[2];
@@ -63,20 +68,23 @@ int main(int argc, char **argv)
             execl("./ku_app", "./ku_app", args, NULL);
         }
     }
+}
+int main(int argc, char **argv)
+{
+    int nice_level[5];
+    int total_count = 0;
+    for (int k = 0; k < 5; k++)
+    {
+        nice_level[k] = atoi(argv[k + 1]);
+        total_count += nice_level[k];
+    }
 
-    struct sigaction signal_action;
-    struct itimerval scheduler;
+    time_slice = atoi(argv[6]);
 
-    memset(&signal_action, 0, sizeof(signal_action));
-    signal_action.sa_handler = &scheduler_handler;
-    sigaction(SIGALRM, &signal_action, NULL);
+    list = (LinkedList *)malloc(sizeof(LinkedList));
+    init_list(list);
+    
+    make_children(total_count, nice_level);
 
-    scheduler.it_interval.tv_sec = 1;
-    scheduler.it_interval.tv_usec = 0;
-    scheduler.it_value.tv_sec = 1;
-    scheduler.it_value.tv_usec = 0;
-
-    kill(get_first(list)->pid, SIGCONT);
-    setitimer(ITIMER_REAL, &scheduler, NULL);
-    while (1);
+    set_timer();
 }

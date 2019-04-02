@@ -16,7 +16,7 @@ struct _Node
     char temp;
     pid_t pid;
     int nice_level;
-    float exec_time;
+    double exec_time;
 };
 struct _LinkedList
 {
@@ -40,7 +40,7 @@ Node *get_first(LinkedList *list)
     return list->head->next_node;
 }
 
-Node *insert_next(Node *node, pid_t pid, int nice_level, float exec_time, char temp)
+Node *insert_next(Node *node, pid_t pid, int nice_level, double exec_time, char temp)
 {
     Node *new_node = (Node *)malloc(sizeof(Node));
 
@@ -57,7 +57,7 @@ Node *insert_next(Node *node, pid_t pid, int nice_level, float exec_time, char t
     return new_node;
 }
 
-Node *insert_last(LinkedList *list, pid_t pid, int nice_level, float exec_time, char temp)
+Node *insert_last(LinkedList *list, pid_t pid, int nice_level, double exec_time, char temp)
 {
     return insert_next(list->tail->prev_node, pid, nice_level, exec_time, temp);
 }
@@ -83,7 +83,7 @@ void change_node(Node *prev, Node *next)
     prev->nice_level = next->nice_level;
     next->nice_level = temp_nice;
 
-    float temp_exec_time = prev->exec_time;
+    double temp_exec_time = prev->exec_time;
     prev->exec_time = next->exec_time;
     next->exec_time = temp_exec_time;
 
@@ -100,8 +100,8 @@ void sort_by_exec(LinkedList *list)
         Node *temp2 = temp->next_node; // list->head->next_node;
         while (temp2 != (list->tail))
         {
-            float time1 = temp -> exec_time;
-            float time2 = temp2 -> exec_time;
+            double time1 = temp -> exec_time;
+            double time2 = temp2 -> exec_time;
             pid_t pid1 = temp -> pid;
             pid_t pid2 = temp2 -> pid;
             if (time1 > time2 || ((time1 == time2) && (pid1 > pid2)))

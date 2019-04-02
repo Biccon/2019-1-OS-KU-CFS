@@ -598,19 +598,19 @@ L
 L
 L
 L
-char: M, pid : 21726, nice_level : 2, exec_time : 7.812500
-char: N, pid : 21727, nice_level : 2, exec_time : 7.812500
-char: O, pid : 21728, nice_level : 2, exec_time : 7.812500
-char: E, pid : 21718, nice_level : 0, exec_time : 8.000000
-char: F, pid : 21719, nice_level : 0, exec_time : 8.000000
-char: D, pid : 21717, nice_level : -1, exec_time : 8.000001
-char: A, pid : 21714, nice_level : -2, exec_time : 8.319999
-char: B, pid : 21715, nice_level : -2, exec_time : 8.319999
-char: C, pid : 21716, nice_level : -2, exec_time : 8.319999
-char: G, pid : 21720, nice_level : 1, exec_time : 8.750000
-char: H, pid : 21721, nice_level : 1, exec_time : 8.750000
-char: I, pid : 21722, nice_level : 1, exec_time : 8.750000
-char: J, pid : 21723, nice_level : 1, exec_time : 8.750000
-char: K, pid : 21724, nice_level : 2, exec_time : 9.375000
-char: L, pid : 21725, nice_level : 2, exec_time : 9.375000
+char: M, pid : 22519, nice_level : 2, exec_time : 7.812500
+char: N, pid : 22520, nice_level : 2, exec_time : 7.812500
+char: O, pid : 22521, nice_level : 2, exec_time : 7.812500
+char: D, pid : 22510, nice_level : -1, exec_time : 8.000000
+char: E, pid : 22511, nice_level : 0, exec_time : 8.000000
+char: F, pid : 22512, nice_level : 0, exec_time : 8.000000
+char: A, pid : 22507, nice_level : -2, exec_time : 8.320000
+char: B, pid : 22508, nice_level : -2, exec_time : 8.320000
+char: C, pid : 22509, nice_level : -2, exec_time : 8.320000
+char: G, pid : 22513, nice_level : 1, exec_time : 8.750000
+char: H, pid : 22514, nice_level : 1, exec_time : 8.750000
+char: I, pid : 22515, nice_level : 1, exec_time : 8.750000
+char: J, pid : 22516, nice_level : 1, exec_time : 8.750000
+char: K, pid : 22517, nice_level : 2, exec_time : 9.375000
+char: L, pid : 22518, nice_level : 2, exec_time : 9.375000
 
