@@ -72,6 +72,7 @@ void make_children(int total_count, int *nice_value)
         }
     }
 }
+
 int main(int argc, char **argv)
 {
     int nice_value[5];
