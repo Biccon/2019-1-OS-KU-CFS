@@ -40,8 +40,7 @@ void set_timer()
 
     kill(get_first(list)->pid, SIGCONT);
     setitimer(ITIMER_REAL, &scheduler, NULL);
-    while (1)
-        ;
+    while (1);
 }
 
 void make_children(int total_count, int *nice_value)
